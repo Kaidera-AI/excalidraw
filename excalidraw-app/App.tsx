@@ -38,10 +38,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { loadFromBlob } from "@excalidraw/excalidraw/data/blob";
 import { t } from "@excalidraw/excalidraw/i18n";
 
-import {
-  usersIcon,
-  share,
-} from "@excalidraw/excalidraw/components/icons";
+import { usersIcon, share } from "@excalidraw/excalidraw/components/icons";
 import { isElementLink } from "@excalidraw/element";
 import {
   bumpElementVersions,
@@ -112,7 +109,7 @@ import {
 } from "./data/localStorage";
 
 import { loadFilesFromFirebase } from "./data/firebase";
-import { parseFragmentAuth, getSession, getProjectId, getFilePath, setFilePath } from "./data/auth";
+import { parseFragmentAuth, getSession, setFilePath } from "./data/auth";
 import { loadFromVault, saveToVault } from "./data/vault";
 import { UnauthScreen } from "./components/UnauthScreen";
 import { VaultFilePicker } from "./components/VaultFilePicker";
@@ -134,7 +131,6 @@ import DebugCanvas, {
   loadSavedDebugState,
 } from "./components/DebugCanvas";
 import { AIComponents } from "./components/AI";
-import { ExcalidrawPlusIframeExport } from "./ExcalidrawPlusIframeExport";
 import { EnGenAIDrawLogo } from "./components/EnGenAIDrawLogo";
 
 import "./index.scss";
@@ -436,7 +432,9 @@ const ExcalidrawWrapper = () => {
   // Vault load
   // ---------------------------------------------------------------------------
   useEffect(() => {
-    if (!session?.filePath || !session?.projectId || !excalidrawAPI) return;
+    if (!session?.filePath || !session?.projectId || !excalidrawAPI) {
+      return;
+    }
 
     loadFromVault(session.projectId, session.filePath)
       .then(({ content, etag }) => {
@@ -462,7 +460,9 @@ const ExcalidrawWrapper = () => {
   // Auto-save to vault
   // ---------------------------------------------------------------------------
   useEffect(() => {
-    if (!session?.projectId || !session?.filePath || !excalidrawAPI) return;
+    if (!session?.projectId || !session?.filePath || !excalidrawAPI) {
+      return;
+    }
 
     const interval = setInterval(() => {
       const elements = excalidrawAPI.getSceneElements();
@@ -478,7 +478,12 @@ const ExcalidrawWrapper = () => {
         files,
       });
 
-      saveToVault(session.projectId, session.filePath, content, currentETag || undefined)
+      saveToVault(
+        session.projectId,
+        session.filePath,
+        content,
+        currentETag || undefined,
+      )
         .then(({ etag }) => setCurrentETag(etag))
         .catch((err) => {
           if (err.message.includes("409")) {
@@ -1164,7 +1169,9 @@ const ExcalidrawWrapper = () => {
             setShowFilePicker(false);
             if (session) {
               setFilePath(path);
-              window.location.hash = `#token=${session.token}&project=${session.projectId}&path=${encodeURIComponent(path)}`;
+              window.location.hash = `#token=${session.token}&project=${
+                session.projectId
+              }&path=${encodeURIComponent(path)}`;
               window.location.reload();
             }
           }}
@@ -1176,12 +1183,6 @@ const ExcalidrawWrapper = () => {
 };
 
 const ExcalidrawApp = () => {
-  const isCloudExportWindow =
-    window.location.pathname === "/excalidraw-plus-export";
-  if (isCloudExportWindow) {
-    return <ExcalidrawPlusIframeExport />;
-  }
-
   return (
     <TopErrorBoundary>
       <Provider store={appJotaiStore}>

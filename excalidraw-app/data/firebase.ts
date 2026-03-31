@@ -6,16 +6,8 @@
  * Phase 3 (Storage API) will replace these with draw-api calls.
  */
 
-import { getSceneVersion } from "@excalidraw/element";
-
-import type {
-  ExcalidrawElement,
-  FileId,
-  OrderedExcalidrawElement,
-} from "@excalidraw/element/types";
-import type {
-  BinaryFileData,
-} from "@excalidraw/excalidraw/types";
+import type { ExcalidrawElement, FileId } from "@excalidraw/element/types";
+import type { BinaryFileData } from "@excalidraw/excalidraw/types";
 
 import type { SyncableExcalidrawElement } from ".";
 import type Portal from "../collab/Portal";
@@ -63,7 +55,10 @@ export const loadFilesFromFirebase = async (
   _prefix: string,
   _decryptionKey: string,
   filesIds: readonly FileId[],
-): Promise<{ loadedFiles: BinaryFileData[]; erroredFiles: Map<FileId, true> }> => {
+): Promise<{
+  loadedFiles: BinaryFileData[];
+  erroredFiles: Map<FileId, true>;
+}> => {
   const erroredFiles = new Map<FileId, true>();
   return { loadedFiles: [], erroredFiles };
 };

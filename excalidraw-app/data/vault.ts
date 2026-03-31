@@ -92,9 +92,7 @@ export async function saveToVault(
   return { etag: data.content_hash };
 }
 
-export async function listVaultFiles(
-  projectId: string,
-): Promise<VaultFile[]> {
+export async function listVaultFiles(projectId: string): Promise<VaultFile[]> {
   const files = await vaultFetch<VaultFile[]>(
     `/projects/${projectId}/vault/ls`,
   );

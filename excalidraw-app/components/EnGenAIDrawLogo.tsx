@@ -1,10 +1,6 @@
 import React from "react";
 
-export const EnGenAIDrawLogo = ({
-  height = 30,
-}: {
-  height?: number;
-}) => {
+export const EnGenAIDrawLogo = ({ height = 30 }: { height?: number }) => {
   return (
     <svg
       aria-label="EnGenAI-Draw"

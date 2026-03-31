@@ -3,7 +3,6 @@ import { useState } from "react";
 
 import { muteFSAbortError } from "@excalidraw/common";
 
-import { useUIAppState } from "../context/ui-appState";
 import { fileOpen } from "../data/filesystem";
 import { saveLibraryAsJSON } from "../data/json";
 import { libraryItemsAtom } from "../data/library";
@@ -15,12 +14,7 @@ import { useApp, useExcalidrawSetAppState } from "./App";
 import ConfirmDialog from "./ConfirmDialog";
 import { isLibraryMenuOpenAtom } from "./LibraryMenu";
 import DropdownMenu from "./dropdownMenu/DropdownMenu";
-import {
-  DotsIcon,
-  ExportIcon,
-  LoadIcon,
-  TrashIcon,
-} from "./icons";
+import { DotsIcon, ExportIcon, LoadIcon, TrashIcon } from "./icons";
 
 import type Library from "../data/library";
 import type { LibraryItem, LibraryItems, UIAppState } from "../types";
@@ -186,7 +180,6 @@ export const LibraryDropdownMenu = ({
 }) => {
   const { library } = useApp();
   const { clearLibraryCache, deleteItemsFromLibraryCache } = useLibraryCache();
-  const appState = useUIAppState();
   const setAppState = useExcalidrawSetAppState();
 
   const [libraryItemsData] = useAtom(libraryItemsAtom);

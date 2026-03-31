@@ -17,20 +17,26 @@ export interface DrawSession {
 
 export function parseFragmentAuth(): DrawSession | null {
   const hash = window.location.hash.slice(1);
-  if (!hash) return null;
+  if (!hash) {
+    return null;
+  }
 
   const params = new URLSearchParams(hash);
   const token = params.get("token");
   const projectId = params.get("project");
   const filePath = params.get("path");
 
-  if (!token || !projectId) return null;
+  if (!token || !projectId) {
+    return null;
+  }
 
   window.history.replaceState(null, "", window.location.pathname);
 
   sessionStorage.setItem(TOKEN_KEY, token);
   sessionStorage.setItem(PROJECT_KEY, projectId);
-  if (filePath) sessionStorage.setItem(PATH_KEY, filePath);
+  if (filePath) {
+    sessionStorage.setItem(PATH_KEY, filePath);
+  }
 
   return { token, projectId, filePath: filePath || "" };
 }
@@ -38,7 +44,9 @@ export function parseFragmentAuth(): DrawSession | null {
 export function getSession(): DrawSession | null {
   const token = sessionStorage.getItem(TOKEN_KEY);
   const projectId = sessionStorage.getItem(PROJECT_KEY);
-  if (!token || !projectId) return null;
+  if (!token || !projectId) {
+    return null;
+  }
   return {
     token,
     projectId,

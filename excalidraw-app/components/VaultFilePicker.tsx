@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { listVaultFiles } from "../data/vault";
 import { getProjectId, setFilePath } from "../data/auth";
 
@@ -43,7 +44,9 @@ export const VaultFilePicker: React.FC<VaultFilePickerProps> = ({
   };
 
   const handleCreate = () => {
-    if (!newFileName.trim()) return;
+    if (!newFileName.trim()) {
+      return;
+    }
     const path = newFileName.endsWith(".excalidraw")
       ? newFileName
       : `${newFileName}.excalidraw`;
@@ -87,7 +90,13 @@ export const VaultFilePicker: React.FC<VaultFilePickerProps> = ({
           <p style={{ opacity: 0.6 }}>No .excalidraw files in this project.</p>
         )}
 
-        <div style={{ maxHeight: "250px", overflowY: "auto", marginBottom: "1rem" }}>
+        <div
+          style={{
+            maxHeight: "250px",
+            overflowY: "auto",
+            marginBottom: "1rem",
+          }}
+        >
           {files.map((file) => (
             <button
               key={file.path}
@@ -107,7 +116,9 @@ export const VaultFilePicker: React.FC<VaultFilePickerProps> = ({
               }}
             >
               {file.path}
-              <span style={{ float: "right", opacity: 0.5, fontSize: "0.75rem" }}>
+              <span
+                style={{ float: "right", opacity: 0.5, fontSize: "0.75rem" }}
+              >
                 {Math.round(file.size_bytes / 1024)}KB
               </span>
             </button>
@@ -115,7 +126,13 @@ export const VaultFilePicker: React.FC<VaultFilePickerProps> = ({
         </div>
 
         <div style={{ borderTop: "1px solid #333", paddingTop: "1rem" }}>
-          <p style={{ fontSize: "0.85rem", marginBottom: "0.5rem", opacity: 0.7 }}>
+          <p
+            style={{
+              fontSize: "0.85rem",
+              marginBottom: "0.5rem",
+              opacity: 0.7,
+            }}
+          >
             Or create a new drawing:
           </p>
           <div style={{ display: "flex", gap: "0.5rem" }}>

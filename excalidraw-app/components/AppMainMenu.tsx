@@ -1,6 +1,4 @@
-import {
-  eyeIcon,
-} from "@excalidraw/excalidraw/components/icons";
+import { eyeIcon } from "@excalidraw/excalidraw/components/icons";
 import { MainMenu } from "@excalidraw/excalidraw/index";
 import React from "react";
 
@@ -25,9 +23,7 @@ export const AppMainMenu: React.FC<{
     <MainMenu>
       <MainMenu.DefaultItems.LoadScene />
       {props.onOpenVault && (
-        <MainMenu.Item
-          onSelect={props.onOpenVault}
-        >
+        <MainMenu.Item onSelect={props.onOpenVault}>
           Open from Vault
         </MainMenu.Item>
       )}
